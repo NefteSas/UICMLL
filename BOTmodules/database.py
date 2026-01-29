@@ -10,12 +10,15 @@ from bs4 import BeautifulSoup
 import pytz
 import requests
 
+from BOTmodules import timecontroller
+
 DATABASE_PATH = "database"
 
 URL = "https://ruz.narfu.ru/?timetable&group=19396"
 LAST_UPDATE = None
 class NarfuAPIOperator():
     def __init__(self):
+        self.LAST_UPDATE = timecontroller.now()
         if (os.path.exists(DATABASE_PATH)):
             print('VIEWED DATABASEPATH')
         else:
@@ -281,8 +284,10 @@ class NarfuAPIOperator():
         content = self.ReadHTML()
         parsed = self.parse_safu_schedule(content)
         self.SerializeParsed(parsed)
-        LAST_UPDATE = datetime.now(pytz.timezone('Europe/Moscow'))
-    
+        self.LAST_UPDATE = timecontroller.now()
+
+    def GetTimeUpdate(self):
+        return self.LAST_UPDATE
 if (__name__ == '__main__'):
     DB = NarfuAPIOperator()
     DB.DownloadHTM()

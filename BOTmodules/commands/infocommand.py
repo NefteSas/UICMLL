@@ -7,6 +7,7 @@ import telegram
 from telegram.ext import ContextTypes
 
 from BOTmodules.commands.basebotcommand import BaseBotCommand
+from BOTmodules.database import LAST_UPDATE, NarfuAPIOperator
 
 ## КОСТЫЛЬ
 BOT_NAME = "Гуманитарии все испортили"
@@ -23,5 +24,6 @@ class InfoCommand(BaseBotCommand):
             f"""
             Привет! {BOT_NAME} - просто расписание. Гуманитарии забыли продлить модеус. Ну, спасибо что не MAX.
             \nВремя сборки - {str(BOT_DATA)}
+            \nПоследнее время обновления ДБ - {str(NarfuAPIOperator().GetTimeUpdate())}
             """,reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("GitHub",url="https://github.com/NefteSas/UICMLL")]])
             )
