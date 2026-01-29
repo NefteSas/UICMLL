@@ -2,6 +2,8 @@ import asyncio
 import datetime
 import os
 
+import pytz
+
 from BOTmodules import *
 from BOTmodules.commands.infocommand import InfoCommand
 from BOTmodules.commands.raspcommand import RaspCommand
@@ -11,6 +13,8 @@ from BOTmodules.commands.weekscommand import WeeksCommand
 from BOTmodules.configuration import ConfigurationOvermind
 from BOTmodules.database import NarfuAPIOperator
 from BOTmodules.telegram_interface import TelegramBotInterface
+
+DEFAULT_TZ = pytz.timezone('Europe/Moscow')
 
 TOKEN = ConfigurationOvermind().getBotToken()
 

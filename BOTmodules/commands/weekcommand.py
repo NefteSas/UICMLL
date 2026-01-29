@@ -7,7 +7,7 @@ from telegram import CallbackQuery, PhotoSize, Update, InlineKeyboardMarkup, Inl
 import telegram
 from telegram.ext import ContextTypes
 from telegram.ext import CallbackQueryHandler, CommandHandler
-from BOTmodules import stringgenerator
+from BOTmodules import stringgenerator, timecontroller
 from BOTmodules.commands.basebotcommand import BaseBotCommand
 from BOTmodules.stringgenerator import GetStringForDate, GetStringForToday
 from BOTmodules.database import NarfuAPIOperator
@@ -31,7 +31,7 @@ class WeekCommand(BaseBotCommand):
             spit = week.span.split("–")
             true_end_of_week = datetime.strptime(spit[1], '%d.%m.%Y') +  timedelta(days=1)
 
-            if (datetime.strptime(spit[0], '%d.%m.%Y') <= datetime(2026,2,9) <= true_end_of_week):
+            if (datetime.strptime(spit[0], '%d.%m.%Y').date() <= timecontroller.today() <= true_end_of_week.date()):
                 result = week
                 break
         if (result is None):
@@ -42,7 +42,7 @@ class WeekCommand(BaseBotCommand):
                 keyboard.append([InlineKeyboardButton(f"{str(day.date)}", callback_data=f"DATE:{str(day.date)}")])
 
         reply_markup = InlineKeyboardMarkup(keyboard)
-        await update.message.reply_text("Выбери неделю",reply_markup=reply_markup)
+        await update.message.reply_text("Выбери день: ",reply_markup=reply_markup)
 
     async def _callback_query(self,update: Update, context: ContextTypes.DEFAULT_TYPE):
         query = update.callback_query
@@ -91,7 +91,8 @@ class WeekCommand(BaseBotCommand):
             if len(day.lessons) <= 0:
                 continue
             keyboard.append([InlineKeyboardButton(f"{str(day.date)}", callback_data=f"DATE:{str(day.date)}")])
-        
+            
+        await query.edit_message_text("Выбери день")
         await query.edit_message_reply_markup(reply_markup=InlineKeyboardMarkup(keyboard))
 
     @override

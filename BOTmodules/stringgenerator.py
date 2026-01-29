@@ -1,14 +1,14 @@
 from datetime import date
 
+from BOTmodules import timecontroller
 from BOTmodules.database import NarfuAPIOperator
 from BOTmodules.scheldue import Lesson, ScheduleParser
 d = { 0 : 'zero', 1 : '1️⃣', 2 : '2️⃣', 3 : '3️⃣', 4 : '4️⃣', 5 : '5️⃣', 6 : '6️⃣', 7 : '7️⃣', 8 : '8️⃣', 9 : '9️⃣'}
-def GetStringForToday() -> str:
-    today = date.today().strftime("%d.%m.%Y")
+def GetStringForToday():
+    today = timecontroller.today()
     return GetStringForDate(today)
 
 def GetStringForDate(date: date) -> str:
-    print(date.strftime("%d.%m.%Y"))
     schedule = ScheduleParser(NarfuAPIOperator().DeserializeData()).get_schedule_by_date(date.strftime("%d.%m.%Y"))
     if (len(schedule) <= 0):
         return "Дата: " + date.strftime("%d.%m.%Y") + "\n\nСидим дома 🎉"

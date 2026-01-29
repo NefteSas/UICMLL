@@ -7,12 +7,13 @@ from typing import List, Optional
 from datetime import datetime
 
 from bs4 import BeautifulSoup
+import pytz
 import requests
 
 DATABASE_PATH = "database"
 
 URL = "https://ruz.narfu.ru/?timetable&group=19396"
-
+LAST_UPDATE = None
 class NarfuAPIOperator():
     def __init__(self):
         if (os.path.exists(DATABASE_PATH)):
@@ -280,6 +281,7 @@ class NarfuAPIOperator():
         content = self.ReadHTML()
         parsed = self.parse_safu_schedule(content)
         self.SerializeParsed(parsed)
+        LAST_UPDATE = datetime.now(pytz.timezone('Europe/Moscow'))
     
 if (__name__ == '__main__'):
     DB = NarfuAPIOperator()

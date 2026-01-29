@@ -1,6 +1,7 @@
 from typing import override
 
 from datetime import datetime
+import pytz
 from telegram import PhotoSize, Update, InlineKeyboardMarkup, InlineKeyboardButton
 import telegram
 from telegram.ext import ContextTypes
@@ -9,7 +10,7 @@ from BOTmodules.commands.basebotcommand import BaseBotCommand
 
 ## КОСТЫЛЬ
 BOT_NAME = "Гуманитарии все испортили"
-BOT_DATA = datetime.now()
+BOT_DATA = datetime.now(pytz.timezone('Europe/Moscow'))
 
 class InfoCommand(BaseBotCommand):
     def __init__(self) -> None:
