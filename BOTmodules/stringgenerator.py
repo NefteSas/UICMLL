@@ -11,9 +11,9 @@ def GetStringForToday():
 def GetStringForDate(date: date) -> str:
     schedule = ScheduleParser(NarfuAPIOperator().DeserializeData()).get_schedule_by_date(date.strftime("%d.%m.%Y"))
     if (len(schedule) <= 0):
-        return "Дата: " + date.strftime("%d.%m.%Y") + "\n\nСидим дома 🎉"
+        return "Дата: " + date.strftime("%d.%m.%Y") + " | " + timecontroller.weekday_short(date.weekday()) + "\n\nСидим дома 🎉"
     else:
-        string_buffer = "Дата: " + date.strftime("%d.%m.%Y")
+        string_buffer = "Дата: " + date.strftime("%d.%m.%Y") + " | " + timecontroller.weekday_short(date.weekday()) + "\n"
         less: Lesson
         for less in schedule:
             if ((less.course_link is not None) or ('ауд. Дистанционное обучение' in str(less.auditorium))):

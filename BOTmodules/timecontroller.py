@@ -9,3 +9,6 @@ def today():
 
 def now():
     return datetime.now(APP_TIMEZONE)
+
+def weekday_short(dt):
+    return ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"][dt]
