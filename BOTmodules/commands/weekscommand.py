@@ -40,10 +40,10 @@ class WeeksCommand(BaseBotCommand):
                 result=week
                 break
 
-        query.answer()
+        await query.answer()
         for day in result.days:
             keyboard.append([InlineKeyboardButton(f"{str(day.date)}", callback_data=f"DATE:{str(day.date)}")])
         
-        query.edit_message_reply_markup(keyboard)
+        await query.edit_message_reply_markup(keyboard)
 
             

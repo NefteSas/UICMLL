@@ -85,7 +85,7 @@ class WeekCommand(BaseBotCommand):
                 result=week
                 break
 
-        query.answer()
+        await query.answer()
 
         for day in result.days:
             if len(day.lessons) <= 0:

@@ -22,5 +22,5 @@ class InfoCommand(BaseBotCommand):
             f"""
             Привет! {BOT_NAME} - просто расписание. Гуманитарии забыли продлить модеус. Ну, спасибо что не MAX.
             \nВремя сборки - {str(BOT_DATA)}
-            """,reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("GitHub",url="https://github.com/NefteSas/HBFSONP")]])
+            """,reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("GitHub",url="https://github.com/NefteSas/UICMLL")]])
             )

@@ -1,3 +1,4 @@
+import asyncio
 import datetime
 import os
 
@@ -12,9 +13,10 @@ from BOTmodules.database import NarfuAPIOperator
 from BOTmodules.telegram_interface import TelegramBotInterface
 
 TOKEN = ConfigurationOvermind().getBotToken()
-DB = NarfuAPIOperator()
-print("UPDATING SCHELDUE")
-DB.UpdateInfo()
+
+
+
+
 TGI = TelegramBotInterface(ConfigurationOvermind().getBotToken())
 TGI.AddHandlerToList(InfoCommand().GetHandler())
 TGI.AddHandlerToList(RaspCommand().GetHandler())
@@ -26,4 +28,7 @@ TGI.AddHandlers(WeekCommand().GetHandler())
 # TGI.AddHandlerToList(RandomMonument().GetHandler())
 # TGI.AddHandlers(MonumentsByLocation().GetHandler())
 TGI.AddHandlerToList(UnknownCommandHandler().GetHandler())
+
+
+
 TGI.Run()
