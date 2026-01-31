@@ -50,7 +50,7 @@ class WeekCommand(BaseBotCommand):
         newContext.args = [query.data.split(":")[1]] 
         await query.answer() 
         print(query.data.split(":")[1])
-        await query.edit_message_text(stringgenerator.GetStringForDate(datetime.strptime(query.data.split(":")[1], '%d.%m.%Y')), parse_mode='Markdown')
+        await query.edit_message_text(stringgenerator.GetStringForDate(datetime.strptime(query.data.split(":")[1], '%d.%m.%Y'), update.effective_user.id), parse_mode='Markdown')
 
     async def _callback_weeks(self, update: Update, callback: ContextTypes.DEFAULT_TYPE):
         keyboard = [

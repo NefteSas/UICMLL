@@ -5,6 +5,7 @@ import os
 import pytz
 
 from BOTmodules import *
+from BOTmodules.commands.filtercommand import FilterCommand
 from BOTmodules.commands.infocommand import InfoCommand
 from BOTmodules.commands.rasp_tommorov import TommorowCommand
 from BOTmodules.commands.raspcommand import RaspCommand
@@ -26,6 +27,7 @@ TGI = TelegramBotInterface(ConfigurationOvermind().getBotToken())
 TGI.AddHandlerToList(InfoCommand().GetHandler())
 TGI.AddHandlerToList(RaspCommand().GetHandler())
 TGI.AddHandlerToList(TommorowCommand().GetHandler())
+TGI.AddHandlers(FilterCommand().GetHandler())
 TGI.AddHandlers(WeekCommand().GetHandler())
 # TGI.AddHandlerToList(RegMonumentConverstation().getHandler()) 
 # TGI.AddHandlerToList(MonumentInfoCommand().GetHandler())

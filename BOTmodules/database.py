@@ -1,3 +1,4 @@
+from array import array
 import json
 import os
 import re
@@ -11,9 +12,9 @@ import pytz
 import requests
 
 from BOTmodules import timecontroller
+from BOTmodules.scheldue import Lesson
 
 DATABASE_PATH = "database"
-
 URL = "https://ruz.narfu.ru/?timetable&group=19396"
 LAST_UPDATE = None
 class NarfuAPIOperator():
@@ -255,7 +256,7 @@ class NarfuAPIOperator():
         
         return result
     
-    def SerializeParsed(self, schedule, filename=DATABASE_PATH+'\schedule.json'):
+    def SerializeParsed(self, schedule, filename=DATABASE_PATH+'/schedule.json'):
         """
         Сохраняет расписание в JSON файл
         """
@@ -274,7 +275,7 @@ class NarfuAPIOperator():
             json.dump(clean_for_json(schedule), f, ensure_ascii=False, indent=2)
         print(f"\nРасписание сохранено в файл: {filename}")
 
-    def DeserializeData(self, filename=DATABASE_PATH+'\schedule.json') -> dict:
+    def DeserializeData(self, filename=DATABASE_PATH+'/schedule.json') -> dict:
         with open(filename, 'r', encoding='utf-8') as f:
             json_data = json.load(f)
         return json_data
@@ -288,10 +289,52 @@ class NarfuAPIOperator():
 
     def GetTimeUpdate(self):
         return self.LAST_UPDATE
+    
+    def SaveUserInfo(self, user_id:int, list: list[str]):
+        data = {}
+        if (os.path.isfile(DATABASE_PATH+"/user.json")):
+            with open(DATABASE_PATH+"/user.json", 'r', encoding='utf-8') as f:
+                data = json.load(f)
+
+
+        data[str(user_id)] = list
+
+        with open(DATABASE_PATH+"/user.json", 'w', encoding='utf-8') as f:
+            json.dump(data, f)
+
+    def LoadUserInfo(self, user_id) -> dict[str,str]:
+        data = {}
+        if (os.path.isfile(DATABASE_PATH+"/user.json")):
+            with open(DATABASE_PATH+"/user.json", 'r', encoding='utf-8') as f:
+                data = json.load(f)
+        else:
+            return None
+        try:
+            return data[str(user_id)]
+        except KeyError:
+            return None
+        
+    def RemoveUserFromBase(self, user_id):
+        data = {}
+        if (os.path.isfile(DATABASE_PATH+"/user.json")):
+            with open(DATABASE_PATH+"/user.json", 'r', encoding='utf-8') as f:
+                data = json.load(f)
+
+        if (str(user_id) in data):
+            del data[str(user_id)]
+        else:
+            return False
+        
+        with open(DATABASE_PATH+"/user.json", 'w', encoding='utf-8') as f:
+            json.dump(data, f)
+
+        return True
+        
 if (__name__ == '__main__'):
     DB = NarfuAPIOperator()
     DB.DownloadHTM()
     content = DB.ReadHTML()
     parsed = DB.parse_safu_schedule(content)
     DB.SerializeParsed(parsed)
+    DB.SaveUserInfo(1488, [Lesson(1)])
 

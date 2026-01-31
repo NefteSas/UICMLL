@@ -17,5 +17,5 @@ class RaspCommand(BaseBotCommand):
 
     @override
     async def _callback(self, update: Update, callback: ContextTypes.DEFAULT_TYPE):
-        await update.message.reply_text(GetStringForToday(), parse_mode='Markdown')
+        await update.message.reply_text(GetStringForToday(update.effective_user.id), parse_mode='Markdown')
             

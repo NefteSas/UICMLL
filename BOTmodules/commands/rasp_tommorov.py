@@ -18,4 +18,4 @@ class TommorowCommand(BaseBotCommand):
 
     @override
     async def _callback(self, update: Update, callback: ContextTypes.DEFAULT_TYPE):
-        await update.message.reply_text(GetStringForDate(timecontroller.today() + timedelta(days=1)), parse_mode='Markdown')
+        await update.message.reply_text(GetStringForDate(timecontroller.today() + timedelta(days=1), update.effective_user.id), parse_mode='Markdown')
